@@ -1,6 +1,6 @@
 #rect {
-    width: 150px;
-    height: 150px;
+    width: 350px;
+    min-height: 150px;
     background: lightblue;
     margin: 0 auto;
 }

@@ -56,14 +56,21 @@ class Game extends Component {
         const current = history[this.state.stepNumber];
         const winner = calculateWinner(current.squares);
         const status = winner ? `Winner: ${winner} ` : `Next player: ${this.spotWhoIsNext()}`;
-        const moves = coords.map((step, move) => {
-            const desc = move ?
-                `Go to move ${this.state.coords[move].pointCoords}` :
+        const moves = coords.map((step, index) => {
+            const desc = index ?
+                `Go to move ${this.state.coords[index].pointCoords}` :
                 'Go to game start';
+
             return (
-                <li key={move}>
-                    <button onClick={() => this.jumpTo(move)}>{desc}</button>
+                index === this.state.stepNumber ? (
+                <li key={index}>
+                    <button onClick={() => this.jumpTo(index)}><b>{desc}</b></button>
                 </li>
+                ) : (
+                    <li key={index}>
+                        <button onClick={() => this.jumpTo(index)}>{desc}</button>
+                    </li>
+                )
             );
         });
         return (

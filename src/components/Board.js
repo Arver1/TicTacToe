@@ -5,31 +5,33 @@ class Board extends Component {
 
     renderSquare(i) {
         return (
-            <Square
+            <Square key={i}
                 value={this.props.squares[i]}
                 onClick={() => this.props.onClick(i)}
             />)
             ;
     }
 
+    createField(size) {
+        return [...new Array(size)].map((it, i) => {
+            return (
+                <div key={i} className="board-row">
+                    {this.createRow(i, size)}
+                </div>
+            )
+        })
+    }
+
+    createRow(row, size){
+        return [...new Array(size)].map((it, i) => {
+            return this.renderSquare(i + row * size)
+        })
+    }
+
     render() {
         return (
             <div>
-                <div className="board-row">
-                    {this.renderSquare(0)}
-                    {this.renderSquare(1)}
-                    {this.renderSquare(2)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(3)}
-                    {this.renderSquare(4)}
-                    {this.renderSquare(5)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(6)}
-                    {this.renderSquare(7)}
-                    {this.renderSquare(8)}
-                </div>
+                {this.createField(this.props.fieldSize)}
             </div>
         );
     }

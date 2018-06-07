@@ -79,6 +79,7 @@ class Game extends Component {
                     <Board
                         squares={current.squares}
                         onClick={(i) => this.handleClick(i)}
+                        fieldSize = {3}
                     />
                 </div>
                 <div className="game-info">

@@ -8,6 +8,7 @@ class Game extends Component {
 
     constructor(props) {
         super(props);
+        this.fieldSize = 4;
         this.state = {
             history: [{
                 squares: Array(9).fill(null)
@@ -37,7 +38,7 @@ class Game extends Component {
             xIsNext: !this.state.xIsNext,
             stepNumber: history.length,
             coords: this.state.coords.concat([{
-                pointCoords: `${((i / 3) ^ 0) + 1}, ${i % 3 + 1}`
+                pointCoords: `${((i / this.fieldSize) ^ 0) + 1}, ${i % this.fieldSize + 1}`
             }])
         })
     }
@@ -79,7 +80,7 @@ class Game extends Component {
                     <Board
                         squares={current.squares}
                         onClick={(i) => this.handleClick(i)}
-                        fieldSize = {3}
+                        fieldSize = {this.fieldSize}
                     />
                 </div>
                 <div className="game-info">

@@ -8,14 +8,15 @@ class Game extends Component {
 
     constructor(props) {
         super(props);
-        this.fieldSize = 4;
+        this.fieldSize = 3;
         this.state = {
             history: [{
                 squares: Array(9).fill(null)
             }],
             xIsNext: true,
             stepNumber: 0,
-            coords: [{}]
+            coords: [{}],
+            orderDirect: true
         }
     }
 
@@ -51,13 +52,19 @@ class Game extends Component {
         });
     }
 
+    changeOrder() {
+        this.setState({
+            orderDirect: !this.state.orderDirect
+        })
+    }
+
     render() {
         const history = this.state.history;
         const coords = this.state.coords;
         const current = history[this.state.stepNumber];
         const winner = calculateWinner(current.squares);
         const status = winner ? `Winner: ${winner} ` : `Next player: ${this.spotWhoIsNext()}`;
-        const moves = coords.map((step, index) => {
+        let moves = coords.map((step, index) => {
             const desc = index ?
                 `Go to move ${this.state.coords[index].pointCoords}` :
                 'Go to game start';
@@ -68,7 +75,7 @@ class Game extends Component {
                     <button onClick={() => this.jumpTo(index)}><b>{desc}</b></button>
                 </li>
                 ) : (
-                    <li key={index}>
+                    <li key={index} a={index}>
                         <button onClick={() => this.jumpTo(index)}>{desc}</button>
                     </li>
                 )
@@ -85,7 +92,10 @@ class Game extends Component {
                 </div>
                 <div className="game-info">
                     <div>{status}</div>
-                    <ol>{moves}</ol>
+                    {this.state.orderDirect ? <ol>{moves}</ol>: <ol reversed>{moves.reverse()}</ol>}
+                </div>
+                <div className="sort">
+                <button onClick={() => this.changeOrder()}>Сортировать</button>
                 </div>
             </div>
         );

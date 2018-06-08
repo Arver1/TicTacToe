@@ -1,5 +1,5 @@
 #rect {
-    width: 350px;
+    width: 400px;
     min-height: 150px;
     background: lightblue;
     margin: 0 auto;
@@ -53,4 +53,7 @@ ol, ul {
 
 .game-info {
     margin-left: 20px;
+}
+.sort {
+    padding: 20px 0 0 10px;
 }

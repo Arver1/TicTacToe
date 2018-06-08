@@ -2,7 +2,8 @@ import React,{Component} from "react";
 
 function Square(props) {
     return (
-        <button className="square" onClick={props.onClick}>
+        <button className = {props.winners ? ~props.winners.indexOf(props.number) ? 'square squareWin' : 'square' : 'square'}
+                onClick={props.onClick}>
             {props.value}
         </button>
     );

@@ -63,7 +63,9 @@ class Game extends Component {
         const coords = this.state.coords;
         const current = history[this.state.stepNumber];
         const winner = calculateWinner(current.squares);
-        const status = winner ? `Winner: ${winner} ` : `Next player: ${this.spotWhoIsNext()}`;
+        const status = winner ? `Winner: ${winner[0]} ` :
+            this.state.stepNumber === Math.pow(this.fieldSize, 2) ? 'No one won, draw'
+                :`Next player: ${this.spotWhoIsNext()}`;
         let moves = coords.map((step, index) => {
             const desc = index ?
                 `Go to move ${this.state.coords[index].pointCoords}` :
@@ -75,7 +77,7 @@ class Game extends Component {
                     <button onClick={() => this.jumpTo(index)}><b>{desc}</b></button>
                 </li>
                 ) : (
-                    <li key={index} a={index}>
+                    <li key={index}>
                         <button onClick={() => this.jumpTo(index)}>{desc}</button>
                     </li>
                 )
@@ -88,6 +90,7 @@ class Game extends Component {
                         squares={current.squares}
                         onClick={(i) => this.handleClick(i)}
                         fieldSize = {this.fieldSize}
+                        winners = {winner ? winner.slice(1) : null}
                     />
                 </div>
                 <div className="game-info">
@@ -95,7 +98,7 @@ class Game extends Component {
                     {this.state.orderDirect ? <ol>{moves}</ol>: <ol reversed>{moves.reverse()}</ol>}
                 </div>
                 <div className="sort">
-                <button onClick={() => this.changeOrder()}>Сортировать</button>
+                <button onClick={() => this.changeOrder()}>Sort</button>
                 </div>
             </div>
         );
@@ -116,7 +119,7 @@ function calculateWinner(squares) {
     for (let i = 0; i < lines.length; i++) {
         const [a, b, c] = lines[i];
         if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-            return squares[a];
+            return [squares[a],a,b,c];
         }
     }
     return null;
